@@ -12,7 +12,7 @@
 target/
 .idea/
 
-# Package Files #
+# Package Files #git 
 *.jar
 *.war
 *.nar
