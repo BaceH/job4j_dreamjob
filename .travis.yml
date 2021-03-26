@@ -14,8 +14,4 @@ notifications:
     recipients:
       - vasyl.byalyk@gmail.com
     on_success: never # default: change
-<<<<<<< HEAD
     on_failure: always # default: always
-=======
-    on_failure: always # default: always
->>>>>>> 2b72eff25aa69d85c12931a288351f9418db861a
