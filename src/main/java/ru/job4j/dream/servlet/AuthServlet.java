@@ -1,11 +1,13 @@
 package ru.job4j.dream.servlet;
 
 import org.apache.log4j.Logger;
+import ru.job4j.dream.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthServlet extends HttpServlet {
@@ -17,6 +19,11 @@ public class AuthServlet extends HttpServlet {
         String password = req.getParameter("password");
         if ("root@local".equals(email) && "root".equals(password)) {
             logger.info("User " + email + " logged in");
+            HttpSession sc = req.getSession();
+            User admin = new User();
+            admin.setName("Admin");
+            admin.setEmail(email);
+            sc.setAttribute("user", admin);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
         } else {
             logger.warn("Hacking attempt!!! User " + email );
