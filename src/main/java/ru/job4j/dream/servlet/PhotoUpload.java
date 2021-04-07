@@ -5,9 +5,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
-import ru.job4j.dream.store.PsqlStore;
+import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PhotoUpload extends HttpServlet {
+    final Logger logger = Logger.getLogger(this.getClass().getName());
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("idUser", req.getParameter("id"));
@@ -60,7 +59,7 @@ public class PhotoUpload extends HttpServlet {
 
             }
         } catch (FileUploadException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
 

@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Properties;
 
 public class PsqlStore implements Store {
+
+    final Logger logger = Logger.getLogger(this.getClass().getName());
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -62,7 +65,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         return posts;
     }
@@ -79,7 +82,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         return candidates;
     }
@@ -113,7 +116,8 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn(e);
+
         }
         return post;
     }
@@ -127,7 +131,7 @@ public class PsqlStore implements Store {
             ps.execute();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
     }
     private Candidate create(Candidate candidate) {
@@ -142,7 +146,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         return candidate;
     }
@@ -155,7 +159,7 @@ public class PsqlStore implements Store {
             ps.execute();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
     }
     @Override
@@ -170,7 +174,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         return null;
     }
@@ -187,7 +191,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e);
         }
         return null;
     }

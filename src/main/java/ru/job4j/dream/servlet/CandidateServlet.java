@@ -1,5 +1,6 @@
 package ru.job4j.dream.servlet;
 
+import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.store.PsqlStore;
 
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CandidateServlet extends HttpServlet {
-
+    final Logger logger = Logger.getLogger(this.getClass().getName());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
