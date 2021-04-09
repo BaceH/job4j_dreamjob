@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -195,4 +196,111 @@ public class PsqlStore implements Store {
         }
         return null;
     }
+
+    @Override
+    public Collection<User> findAllUser() {
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM userjob")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    users.add(new User(it.getInt("id"),
+                                        it.getString("name"),
+                                        it.getString("email"),
+                                        it.getString("password"))
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            logger.warn(e);
+        }
+        return users;
+    }
+
+    @Override
+    public void saveUser(User user) {
+        if (user.getId() == 0) {
+            create(user);
+        } else {
+            update(user);
+        }
+    }
+
+    @Override
+    public User findUserById(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM userjob WHERE id=(?)")
+        ){
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if( rs.next()) {
+                    return new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            logger.warn(e);
+        }
+        return null;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM userjob WHERE email=(?)")
+        ){
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if( rs.next()) {
+                    return new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            logger.warn(e);
+        }
+        return null;
+    }
+
+    private User create(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO userjob (name, email, password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            logger.warn(e);
+
+        }
+        return user;
+    }
+
+    private void update(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("UPDATE userjob SET name=(?), email=(?), password=(?)  WHERE id=(?)")
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getId());
+            ps.execute();
+        } catch (Exception e) {
+            logger.warn(e);
+        }
+    }
+
 }
