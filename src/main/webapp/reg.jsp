@@ -22,11 +22,10 @@
 <body>
 <div class="container pt-3">
     <jsp:include page="menu.jsp" />
-    <a class="nav-link" href="<%=request.getContextPath()%>/reg.jsp">Регистрация</a>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
+                Регистрация
             </div>
             <c:if test="${not empty error}">
                 <div class="p-3 mb-2 bg-danger text-white">
@@ -34,16 +33,24 @@
                 </div>
             </c:if>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
                     <div class="form-group">
                         <label>Почта</label>
                         <input type="text" class="form-control" name="email">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <div class="form-group">
+                        <label>Повторите пароль</label>
+                        <input type="password" class="form-control" name="passwordagain">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                 </form>
             </div>
         </div>

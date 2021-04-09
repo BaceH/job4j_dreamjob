@@ -2,6 +2,7 @@ package ru.job4j.dream.servlet;
 
 import org.apache.log4j.Logger;
 import ru.job4j.dream.model.User;
+import ru.job4j.dream.store.PsqlStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +12,17 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthServlet extends HttpServlet {
-    final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if ("root@local".equals(email) && "root".equals(password)) {
+        User userAut = PsqlStore.instOf().findUserByEmail(email);
+        if (userAut != null && userAut.getPassword().equals(password)){
             logger.info("User " + email + " logged in");
             HttpSession sc = req.getSession();
-            User admin = new User();
-            admin.setName("Admin");
-            admin.setEmail(email);
-            sc.setAttribute("user", admin);
+            sc.setAttribute("user", userAut);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
         } else {
             logger.warn("Hacking attempt!!! User " + email );
