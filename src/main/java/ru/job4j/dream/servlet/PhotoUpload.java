@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class PhotoUpload extends HttpServlet {
-    final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
