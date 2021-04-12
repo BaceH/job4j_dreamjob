@@ -66,21 +66,11 @@ public class MemStore implements Store{
     }
 
     @Override
-    public Collection<User> findAllUser() {
-        return users.values();
-    }
-
-    @Override
     public void saveUser(User user) {
         if (user.getId() == 0){
             user.setId(USER_ID.incrementAndGet());
         }
         users.put(user.getId(), user);
-    }
-
-    @Override
-    public User findUserById(int id) {
-        return users.get(id);
     }
 
     @Override

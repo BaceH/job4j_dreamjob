@@ -1,5 +1,6 @@
 package ru.job4j.dream.store;
 
+import org.w3c.dom.ls.LSOutput;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
@@ -26,17 +27,13 @@ public class PsqlMain {
 
         store.saveUser(new User(0, "name", "email@local","1212121"));
         store.saveUser(new User(0, "2name", "2email@local","232323"));
-        for (User u : store.findAllUser()){
-            System.out.println(u.toString());
-        }
-        User user2 = store.findUserById(2);
+
         User user1 = store.findUserByEmail("email@local");
-        user2.setEmail("emailemail@local");
-        store.saveUser(user2);
+        System.out.println(user1.toString());
         user1.setName("NNName");
         store.saveUser(user1);
-        for (User u : store.findAllUser()){
-            System.out.println(u.toString());
-        }
+
+        System.out.println(store.findUserByEmail("email@local").toString());
+
     }
 }

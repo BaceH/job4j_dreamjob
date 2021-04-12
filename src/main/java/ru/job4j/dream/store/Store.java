@@ -19,8 +19,7 @@ public interface Store {
 
     Candidate findByIdCandidate(int id);
 
-    Collection<User> findAllUser();
     void saveUser(User user);
-    User findUserById(int id);
     User findUserByEmail(String email);
+
 }
