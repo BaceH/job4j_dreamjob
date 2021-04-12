@@ -66,7 +66,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return posts;
     }
@@ -83,7 +83,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return candidates;
     }
@@ -117,7 +117,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
 
         }
         return post;
@@ -132,7 +132,7 @@ public class PsqlStore implements Store {
             ps.execute();
 
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
     }
     private Candidate create(Candidate candidate) {
@@ -147,7 +147,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return candidate;
     }
@@ -160,7 +160,7 @@ public class PsqlStore implements Store {
             ps.execute();
 
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
     }
     @Override
@@ -175,7 +175,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return null;
     }
@@ -192,7 +192,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return null;
     }
@@ -222,7 +222,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
         return null;
     }
@@ -241,7 +241,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
 
         }
         return user;
@@ -257,7 +257,7 @@ public class PsqlStore implements Store {
             ps.setInt(4, user.getId());
             ps.execute();
         } catch (Exception e) {
-            logger.warn(e);
+            logger.error("Сообщение об ошибке" + e);
         }
     }
 
