@@ -59,7 +59,7 @@ public class PhotoUpload extends HttpServlet {
 
             }
         } catch (FileUploadException e) {
-            logger.error("Сообщение об ошибке" + e);
+            logger.error("Why it has happened", e);
         }
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
 
