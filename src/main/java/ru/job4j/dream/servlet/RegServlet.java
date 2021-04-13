@@ -16,11 +16,6 @@ public class RegServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        if (!req.getParameter("password").equals(req.getParameter("passwordagain"))){
-            logger.warn("Парали должни совпадать!" );
-            req.setAttribute("error", "Парали должни совпадать!");
-            req.getRequestDispatcher("reg.jsp").forward(req, resp);
-        }
         User userAut = PsqlStore.instOf().findUserByEmail(req.getParameter("email"));
         if (userAut == null) {
             PsqlStore.instOf().saveUser(
@@ -31,15 +26,12 @@ public class RegServlet extends HttpServlet {
                             req.getParameter("password")
                     )
             );
+            logger.info("Зарегистрирован новый пользователь: " + req.getParameter("email"));
+            resp.sendRedirect(req.getContextPath() + "/index.jsp");
         } else {
             req.setAttribute("error", "Пользователь с таким email зарегистрирован.");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
         }
 
-
-
-
-        logger.info("Зарегистрирован новый пользователь: " + req.getParameter("email"));
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 }
