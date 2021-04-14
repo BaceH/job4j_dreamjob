@@ -66,7 +66,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Why it has happened", e);
+            logger.error("'SELECT * FROM post' ended in error", e);
         }
         return posts;
     }
@@ -83,7 +83,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Why it has happened", e);
+            logger.error("'SELECT * FROM candidate' ended in error", e);
         }
         return candidates;
     }
@@ -116,8 +116,8 @@ public class PsqlStore implements Store {
                     post.setId(id.getInt(1));
                 }
             }
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'INSERT INTO post' ended in error", e);
 
         }
         return post;
@@ -131,8 +131,8 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.execute();
 
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'UPDATE post' ended in error", e);
         }
     }
     private Candidate create(Candidate candidate) {
@@ -146,8 +146,8 @@ public class PsqlStore implements Store {
                     candidate.setId(id.getInt(1));
                 }
             }
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'INSERT INTO candidate' ended in error", e);
         }
         return candidate;
     }
@@ -159,8 +159,8 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.execute();
 
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'UPDATE candidate' ended in error", e);
         }
     }
     @Override
@@ -175,7 +175,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Why it has happened", e);
+            logger.error("'SELECT * FROM post WHERE id=' ended in error", e);
         }
         return null;
     }
@@ -192,7 +192,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Why it has happened", e);
+            logger.error("'SELECT * FROM candidate WHERE id=' ended in error", e);
         }
         return null;
     }
@@ -222,7 +222,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Why it has happened", e);
+            logger.error("'SELECT * FROM userjob WHERE email=' ended in error", e);
         }
         return null;
     }
@@ -240,8 +240,8 @@ public class PsqlStore implements Store {
                     user.setId(id.getInt(1));
                 }
             }
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'INSERT INTO userjob' ended in error", e);
 
         }
         return user;
@@ -256,8 +256,8 @@ public class PsqlStore implements Store {
             ps.setString(3, user.getPassword());
             ps.setInt(4, user.getId());
             ps.execute();
-        } catch (Exception e) {
-            logger.error("Why it has happened", e);
+        } catch (SQLException e) {
+            logger.error("'UPDATE userjob SET' ended in error", e);
         }
     }
 
