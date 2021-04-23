@@ -26,6 +26,21 @@
                 alert("Заполните поле 'Описание'!");
                 return false;
             }
+
+            return true;
+        }
+        function addRow() {
+            if (validate()) {
+
+                var tr = '<tr><td>' + $('#table tr').length + '</td>' +
+                    '<td>' + $('#name').val() + '</td>' +
+                    '<td>' + $('#surname').val() + '</td>' +
+                    '<td>' + $('input[type="radio"]').val() + '</td>' +
+                    '<td>' + $('#description').val() + '</td></tr>'
+
+                $('#table tr:last').after(tr);
+            }
+            return false
         }
     </script>
 </head>
@@ -37,7 +52,7 @@
 </div>
 <div class="container">
     <h2>Форма - с полями</h2>
-    <form action="/action_page.php">
+    <form action="/#">
         <div class="form-group">
             <label for="name">Имя:</label>
             <input type="text" class="form-control" id="name">
@@ -68,38 +83,39 @@
 
 <div class="container">
     <h2>Таблица</h2>
-    <table class="table table-striped">
+    <p><button type="button" class="btn btn-default" onclick="return addRow();">Добавить строку</button></p>
+    <table class="table table-striped" id="table">
         <thead>
-        <tr>
-            <th>id</th>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Пол</th>
-            <th>Описание</th>
-        </tr>
+            <tr>
+                <th>id</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Пол</th>
+                <th>Описание</th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>M</td>
-            <td>john@example.com</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>Ж</td>
-            <td>mary@example.com</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>July</td>
-            <td>Dooley</td>
-            <td>Ж</td>
-            <td>july@example.com</td>
-        </tr>
+            <tr>
+                <td>1</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>M</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>Ж</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>Ж</td>
+                <td>july@example.com</td>
+            </tr>
         </tbody>
     </table>
 </div>
