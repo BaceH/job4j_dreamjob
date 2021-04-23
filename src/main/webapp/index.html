@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function validate() {
+            if ($('#name').val() == ''){
+                alert("Заполните поле 'Имя'!");
+                return false;
+            }
+            if ($('#surname').val() == ''){
+                alert("Заполните поле 'Фамилия'!");
+                return false;
+            }
+            if ($('input[type="radio"]:checked').length == 0){
+                alert("Выбирите пол!");
+                return false;
+            }
+            if ($('#description').val() == ''){
+                alert("Заполните поле 'Описание'!");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -29,10 +50,10 @@
         <div class="form-group">
             <label for="surname">Пол: </label>
             <div class="radio-inline">
-                <label><input type="radio" name="sex">М </label>
+                <label><input type="radio" name="sex" value="male">М </label>
             </div>
             <div class="radio-inline">
-                <label><input type="radio" name="sex">Ж </label>
+                <label><input type="radio" name="sex" value="female">Ж </label>
             </div>
         </div>
 
@@ -41,7 +62,7 @@
             <textarea class="form-control" rows="5" id="description"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
     </form>
 </div>
 
