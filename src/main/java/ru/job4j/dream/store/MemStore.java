@@ -9,12 +9,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MemStore implements Store{
-
+public class MemStore implements Store {
     private static final MemStore INST = new MemStore();
-    private static AtomicInteger POST_ID = new AtomicInteger(4);
-    private static AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
-    private static AtomicInteger USER_ID = new AtomicInteger(1);
+    private static AtomicInteger postId = new AtomicInteger(4);
+    private static AtomicInteger candidateId = new AtomicInteger(4);
+    private static AtomicInteger userId = new AtomicInteger(1);
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
@@ -31,10 +30,12 @@ public class MemStore implements Store{
     public static MemStore instOf() {
         return INST;
     }
+
     @Override
     public Collection<Post> findAllPosts() {
         return posts.values();
     }
+
     @Override
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
@@ -43,7 +44,7 @@ public class MemStore implements Store{
     @Override
     public void savePost(Post post) {
         if (post.getId() == 0) {
-            post.setId(POST_ID.incrementAndGet());
+            post.setId(postId.incrementAndGet());
         }
         posts.put(post.getId(), post);
     }
@@ -52,10 +53,11 @@ public class MemStore implements Store{
     public Post findByIdPost(int id) {
         return posts.get(id);
     }
+
     @Override
     public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
-            candidate.setId(CANDIDATE_ID.incrementAndGet());
+            candidate.setId(candidateId.incrementAndGet());
         }
         candidates.put(candidate.getId(), candidate);
     }
@@ -67,8 +69,8 @@ public class MemStore implements Store{
 
     @Override
     public void saveUser(User user) {
-        if (user.getId() == 0){
-            user.setId(USER_ID.incrementAndGet());
+        if (user.getId() == 0) {
+            user.setId(userId.incrementAndGet());
         }
         users.put(user.getId(), user);
     }
@@ -76,11 +78,10 @@ public class MemStore implements Store{
     @Override
     public User findUserByEmail(String email) {
         for (User u : users.values()) {
-            if (u.getEmail().equals(email))
+            if (u.getEmail().equals(email)) {
                 return u;
+            }
         }
         return null;
     }
-
-
 }

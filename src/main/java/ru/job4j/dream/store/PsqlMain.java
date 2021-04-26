@@ -25,8 +25,8 @@ public class PsqlMain {
 //            System.out.println(candidate.getId() + " " + candidate.getName());
 //        }
 
-        store.saveUser(new User(0, "name", "email@local","1212121"));
-        store.saveUser(new User(0, "2name", "2email@local","232323"));
+        store.saveUser(new User(0, "name", "email@local", "1212121"));
+        store.saveUser(new User(0, "2name", "2email@local", "232323"));
 
         User user1 = store.findUserByEmail("email@local");
         System.out.println(user1.toString());

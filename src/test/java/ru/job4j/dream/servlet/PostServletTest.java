@@ -54,7 +54,6 @@ public class PostServletTest {
         PowerMockito.mockStatic(PsqlStore.class);
         Mockito.when(PsqlStore.instOf()).thenReturn(memStore);
 
-
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpSession session = mock(HttpSession.class);
         session.setAttribute("user", new User(0, "test", "email@local", "test"));

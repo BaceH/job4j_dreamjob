@@ -43,7 +43,7 @@ public class PhotoUpload extends HttpServlet {
                 folder.mkdir();
             }
             for (FileItem item : items) {
-                if (item.isFormField() && item.getFieldName().equals("idUser")){
+                if (item.isFormField() && item.getFieldName().equals("idUser")) {
                     id = item.getString();
 
                 }
@@ -51,7 +51,7 @@ public class PhotoUpload extends HttpServlet {
             for (FileItem item : items) {
 
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + id + "." + FilenameUtils.getExtension( item.getName()));
+                    File file = new File(folder + File.separator + id + "." + FilenameUtils.getExtension(item.getName()));
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }

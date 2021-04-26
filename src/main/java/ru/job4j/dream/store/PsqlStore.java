@@ -76,7 +76,7 @@ public class PsqlStore implements Store {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
-        ){
+        ) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     candidates.add(new Candidate(rs.getInt("id"), rs.getString("name")));
@@ -96,6 +96,7 @@ public class PsqlStore implements Store {
             update(candidate);
         }
     }
+
     @Override
     public void savePost(Post post) {
         if (post.getId() == 0) {
@@ -135,6 +136,7 @@ public class PsqlStore implements Store {
             logger.error("'UPDATE post' ended in error", e);
         }
     }
+
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
@@ -151,6 +153,7 @@ public class PsqlStore implements Store {
         }
         return candidate;
     }
+
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET name=(?) WHERE id=(?)")
@@ -163,14 +166,15 @@ public class PsqlStore implements Store {
             logger.error("'UPDATE candidate' ended in error", e);
         }
     }
+
     @Override
     public Post findByIdPost(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id=(?)")
-        ){
+        ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if( rs.next()) {
+                if (rs.next()) {
                     return new Post(rs.getInt("id"), rs.getString("name"));
                 }
             }
@@ -184,10 +188,10 @@ public class PsqlStore implements Store {
     public Candidate findByIdCandidate(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE id=(?)")
-        ){
+        ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if( rs.next()) {
+                if (rs.next()) {
                     return new Candidate(rs.getInt("id"), rs.getString("name"));
                 }
             }
@@ -210,10 +214,10 @@ public class PsqlStore implements Store {
     public User findUserByEmail(String email) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM userjob WHERE email=(?)")
-        ){
+        ) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
-                if( rs.next()) {
+                if (rs.next()) {
                     return new User(rs.getInt("id"),
                             rs.getString("name"),
                             rs.getString("email"),

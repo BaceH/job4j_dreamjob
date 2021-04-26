@@ -14,7 +14,7 @@ public class PhotoDelete extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         for (File name : new File("C:\\projects\\images\\").listFiles()) {
-            if(id.equals(FilenameUtils.removeExtension(name.getName()))){
+            if (id.equals(FilenameUtils.removeExtension(name.getName()))) {
                 name.delete();
             }
 
@@ -22,6 +22,4 @@ public class PhotoDelete extends HttpServlet {
 
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
-
-
 }

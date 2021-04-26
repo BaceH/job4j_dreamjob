@@ -19,13 +19,13 @@ public class AuthServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         User userAut = PsqlStore.instOf().findUserByEmail(email);
-        if (userAut != null && userAut.getPassword().equals(password)){
+        if (userAut != null && userAut.getPassword().equals(password)) {
             logger.info("User " + email + " logged in");
             HttpSession sc = req.getSession();
             sc.setAttribute("user", userAut);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
         } else {
-            logger.warn("Hacking attempt!!! User " + email );
+            logger.warn("Hacking attempt!!! User " + email);
             req.setAttribute("error", "Не верный email или пароль");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
