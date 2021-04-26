@@ -11,15 +11,15 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 <script>
     function sendGreeting() {
-
+        var obj =  "{text : '" + $('#exampleInputEmail1').val() + "'}";
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: 'http://localhost:8081/dreamjob/greet',
-            data: 'email=' + $('#exampleInputEmail1').val(),
-            dataType: 'text'
+            data: obj,
+            dataType: 'json'
         }).done(function(data) {
-            $('#exampleInputEmail1').val('')
-            $('form').before('<h1>' + data + '</h1>');
+            $('form').before('<h1>' + data.textRes + '</h1>');
+            $('#exampleInputEmail1').val('');
         }).fail(function(err){
             alert("error \n" + err );
         });
