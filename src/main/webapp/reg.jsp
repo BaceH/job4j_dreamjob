@@ -1,27 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<jsp:include page="piece/header.jsp" />
 
-    <title>Работа мечты</title>
-</head>
-<body>
-<div class="container pt-3">
-    <jsp:include page="menu.jsp" />
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -40,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email" required>
+                        <input type="text" class="form-control" name="email"  required>
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
@@ -50,11 +31,51 @@
                         <label>Повторите пароль</label>
                         <input type="password" class="form-control" name="passwordagain" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Зарегистрироваться</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+    <script>
+        $(document).ready(function() {
+            $('#submit-button').click(function() {
+                if (!validateName()) {
+                    return false;
+                }
+                if (!validateEmail()) {
+                    return false;
+                }
+                if (!validatePassword()) {
+                    return false;
+                }
+                return true;
+            });
+
+            function validateEmail () {
+
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test($('input[name=email]').val()))
+                {
+                    return true;
+                }
+                alert("Проверьте поле Почта, почта введена некоректно.");
+                return false;
+            }
+            function validatePassword() {
+                if ($('input[name=password]').val() === $('input[name=passwordagain]').val()){
+                    return true;
+                }
+                alert("Пароли должны совпадать!");
+                return false;
+            }
+            function validateName() {
+                if ($('input[name=name]').val().length > 1){
+                    return true;
+                }
+                alert("Проверьте поле Имя, поле не должно быть пустым!");
+                return false;
+            }
+        });
+    </script>
+
+<jsp:include page="piece/footer.jsp" />

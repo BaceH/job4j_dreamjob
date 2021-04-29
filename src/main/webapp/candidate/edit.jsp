@@ -1,38 +1,17 @@
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+<jsp:include page="../piece/header.jsp" />
 
-    <title>Работа мечты</title>
-</head>
-<body>
-<%
-    String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
-    if (id != null) {
-        candidate = PsqlStore.instOf().findByIdCandidate(Integer.parseInt(id));
-    }
-%>
+    <%
+        String id = request.getParameter("id");
+        Candidate candidate = new Candidate(0, "");
+        if (id != null) {
+            candidate = PsqlStore.instOf().findByIdCandidate(Integer.parseInt(id));
+        }
+    %>
 
-<div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -49,11 +28,72 @@
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name"  value="<%=candidate.getName()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label>Город</label>
+                        <select name="cityId" id="city-list" class="browser-default custom-select">
+                            <option value="" selected>выберите город</option>
+                        </select>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submit-button">Сохранить</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+<script>
+    $(document).ready(function() {
+        $('#submit-button').click(function() {
+            if (!validateName()) {
+                return false;
+            }
+            if (!validateCity()) {
+                return false;
+            }
+            return true;
+        });
+
+        function validateName() {
+            if ($('input[name=name]').val() !== ""){
+                return true;
+            }
+            alert("Введите коректное имя!");
+            return false;
+        }
+        function validateCity() {
+            if ($('option:selected').val() !== ""){
+                return true;
+            }
+            alert("Выбирите город!");
+            return false;
+        }
+
+        getCity();
+        function getCity() {
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/dreamjob/city',
+                data: "{text : 'cityList'}",
+                dataType: 'json'
+            }).done(function(data) {
+                Object.entries(data).forEach(([key, value]) => {
+                    let option;
+                    if ('<%=candidate.getCityId()%>' === key) {
+                        option = "<option value='" + key + "' selected>" + value + "</option>";
+                    } else {
+                        option = "<option value='" + key + "'>" + value + "</option>";
+                    }
+                    $('#city-list').find('option:last').after(option);
+                });
+                // $('#').before('<h1>' + data.textRes + '</h1>');
+                // $('#exampleInputEmail1').val('');
+            }).fail(function(err){
+                alert("error \n" + err );
+            });
+        }
+
+    });
+</script>
+
+<jsp:include page="../piece/footer.jsp" />
